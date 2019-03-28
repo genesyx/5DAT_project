@@ -105,11 +105,40 @@ namespace _5DAT_console_app
 
             using (StreamWriter file = new StreamWriter(path))
             {
+                List<string> filterAlphabeticList = new List<string>();
+
+                List<char> listNumbers = new List<char>()
+                {
+                    '0',
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '_'
+                };
+
                 foreach (var occurence in occurencesList)
                 {
-                    string lineToWrite = $"({occurence.Key}, {occurence.Value.Count})";
-                    file.WriteLine(lineToWrite);
-                    Console.WriteLine($"Occurence : {lineToWrite}");
+                    if (!listNumbers.Contains(occurence.Key))
+                    {
+                        string lineToWrite = $"({occurence.Key}, {occurence.Value.Count})";
+
+                        filterAlphabeticList.Add(lineToWrite);
+                        Console.WriteLine($"Occurence : {lineToWrite}");
+                    }
+                }
+
+                // On trie par ordre alphabétic
+                filterAlphabeticList.Sort();
+
+                foreach (var occurence in filterAlphabeticList)
+                {
+                    file.WriteLine(occurence);
                 }
 
                 Console.WriteLine($"Le fichier {fileNameOutput} a bien été créé avec les résultats du livre");
